@@ -1,8 +1,10 @@
+using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ShipShooting : MonoBehaviour
 {
-    [SerializeField] protected GameObject bullet;
+    //[SerializeField] protected GameObject bullet;
     [SerializeField] protected float shootDelay;
     protected float shootTime = 0;
 
@@ -14,7 +16,9 @@ public class ShipShooting : MonoBehaviour
     {
         shootTime += Time.deltaTime;
         if (shootTime < shootDelay) return;
-        Instantiate(bullet, transform.position, Quaternion.identity);
+        if (GetInput.Instance.Fire1 != 1) return;
+        GameObject newBullet = Spawner.Instance.Spawn("Bullet_1(Clone)",transform.position, Quaternion.identity).gameObject;
+        newBullet.SetActive(true);
         shootTime = 0;
     }
 
